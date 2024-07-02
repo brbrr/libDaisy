@@ -20,7 +20,7 @@
 #define NEO_TRELLIS_X(k) ((k) % 4)
 #define NEO_TRELLIS_Y(k) ((k) / 4)
 
-#define NEO_TRELLIS_XY(x, y) ((y)*NEO_TRELLIS_NUM_ROWS + (x))
+#define NEO_TRELLIS_XY(x, y) ((y) * NEO_TRELLIS_NUM_ROWS + (x))
 
 namespace daisy
 {
@@ -333,6 +333,9 @@ class NeoTrellis
         \param polling pass true if the interrupt pin is not being used, false if
         it is. Defaults to true. 
     */
+
+    keyEventRaw e[100];
+
     void Process(bool polling = true)
     {
         uint8_t count = GetKeypadCount();
@@ -341,7 +344,6 @@ class NeoTrellis
         {
             if(polling)
                 count = count + 2;
-            keyEventRaw e[count];
             ReadKeypad(e, count);
             for(int i = 0; i < count; i++)
             {

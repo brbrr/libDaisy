@@ -3,10 +3,14 @@
 #include "usbd_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
+#include "tusb.h"
 
 using namespace daisy;
 
 static void UsbErrorHandler();
+
+uint8_t usb_fs_hw_initialized = 0;
+uint8_t usb_hs_hw_initialized = 0;
 
 // Externs for IRQ Handlers
 extern "C"
@@ -32,22 +36,18 @@ UsbHandle::ReceiveCallback rx_callback;
 static void InitFS()
 {
     rx_callback = DummyRxCallback;
-    if(USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+    if(usb_fs_hw_initialized == 0)
     {
-        UsbErrorHandler();
+        usb_fs_hw_initialized = 1;
+        if(USBD_Init(&hUsbDeviceFS, NULL, DEVICE_FS) != USBD_OK)
+        {
+            UsbErrorHandler();
+        }
     }
-    if(USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
+    auto result = tud_init(BOARD_TUD_RHPORT);
+    if(!result)
     {
-        UsbErrorHandler();
-    }
-    if(USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS)
-       != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_Start(&hUsbDeviceFS) != USBD_OK)
-    {
-        UsbErrorHandler();
+        while(true) {}
     }
 }
 
@@ -61,25 +61,41 @@ static void DeinitFS()
 
 static void InitHS()
 {
-    // HS as FS
-    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
+    rx_callback = DummyRxCallback;
+    if(usb_hs_hw_initialized == 0)
     {
-        UsbErrorHandler();
+        usb_hs_hw_initialized = 1;
+        if(USBD_Init(&hUsbDeviceHS, NULL, DEVICE_HS) != USBD_OK)
+        {
+            UsbErrorHandler();
+        }
     }
-    if(USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC) != USBD_OK)
+    tud_init(1);
+}
+
+void UsbHandle::RunTask()
+{
+    tud_task();
+}
+
+void UsbHandle::TestCDC()
+{
+    if(tud_cdc_available())
     {
-        UsbErrorHandler();
-    }
-    if(USBD_CDC_RegisterInterface(&hUsbDeviceHS, &USBD_Interface_fops_HS)
-       != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_Start(&hUsbDeviceHS) != USBD_OK)
-    {
-        UsbErrorHandler();
+        // read data
+        char     buf[64];
+        uint32_t count = tud_cdc_read(buf, sizeof(buf));
+        (void)count;
+
+        // Echo back
+        // Note: Skip echo by commenting out write() and write_flush()
+        // for throughput test e.g
+        //    $ dd if=/dev/zero of=/dev/ttyACM0 count=10000
+        tud_cdc_write(buf, count);
+        tud_cdc_write_flush();
     }
 }
+
 
 static void DeinitHS()
 {
@@ -124,11 +140,15 @@ void UsbHandle::DeInit(UsbPeriph dev)
 
 UsbHandle::Result UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
 {
-    return CDC_Transmit_FS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
+    tud_cdc_write_flush();
+    return ret;
 }
 UsbHandle::Result UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
 {
-    return CDC_Transmit_HS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
+    tud_cdc_write_flush();
+    return ret;
 }
 
 void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
@@ -170,5 +190,8 @@ extern "C"
         HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
     }
 
-    void OTG_FS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS); }
+    void OTG_FS_IRQHandler(void)
+    {
+        tud_int_handler(BOARD_TUD_RHPORT);
+    }
 }

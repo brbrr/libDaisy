@@ -5,14 +5,14 @@ if(${DAISYSP_DIR})
   set(DAISYSP_LIB DaisySP)
 endif()
 
+set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_flash.lds)
+
 if(APP_BOOT)
   if(${APP_BOOT} STREQUAL "BOOT_SRAM")
     set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_sram.lds)
   elseif(${APP_BOOT} STREQUAL "BOOT_QSPI")
     set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_qspi.lds)
   endif()
-else()
-  set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_flash.lds)
 endif()
 
 message(STATUS "Bootloader: ${APP_BOOT} ${LINKER_SCRIPT}")

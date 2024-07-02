@@ -49,6 +49,11 @@ static void InitFS()
     {
         while(true) {}
     }
+    // !!! Required to make CDC work
+    while(!tud_cdc_connected())
+    {
+        tud_task();
+    }
 }
 
 static void DeinitFS()

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boards_1705',['BOARDS',['../group__boards.html',1,'']]]
+  ['boards_0',['BOARDS',['../group__boards.html',1,'']]]
 ];

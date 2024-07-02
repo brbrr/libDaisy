@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['very_5ffast_1664',['VERY_FAST',['../classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bcead3f84081b6b3a6c3f66b20414b6a7238',1,'daisy::SdmmcHandler']]]
+  ['qspi_0',['QSPI',['../classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669a6df135cbc1eab65584cff039890c3b6b',1,'daisy::System']]]
 ];

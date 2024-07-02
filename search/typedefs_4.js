@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputbuffer_1440',['OutputBuffer',['../classdaisy_1_1_audio_handle.html#aa0728b1916a1a1c569e601f27224a3a1',1,'daisy::AudioHandle']]]
+  ['flushfuncptr_0',['FlushFuncPtr',['../structdaisy_1_1_ui_canvas_descriptor.html#a500ad5fdd90fbedadb0761d86f0d0d2e',1,'daisy::UiCanvasDescriptor']]]
 ];

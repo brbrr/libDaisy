@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['direction_1459',['Direction',['../classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54c',1,'daisy::I2CHandle::Direction()'],['../structdaisy_1_1_sai_handle_1_1_config.html#a80ffb7d40b82652f1550e8cf6ca56f81',1,'daisy::SaiHandle::Config::Direction()']]],
-  ['dsy_5fgpio_5fmode_1460',['dsy_gpio_mode',['../group__other.html#ga0edc3fcaf729346c5251d263d732666e',1,'gpio.h']]],
-  ['dsy_5fgpio_5fport_1461',['dsy_gpio_port',['../group__utility.html#ga3f3543798ae410cae1cade28cd0fc14a',1,'daisy_core.h']]],
-  ['dsy_5fgpio_5fpull_1462',['dsy_gpio_pull',['../group__other.html#gad8a85223f8dbcdf2c2cfc9302b3451b8',1,'gpio.h']]],
-  ['dsy_5fqspi_5fdevice_1463',['dsy_qspi_device',['../group__serial.html#ga3ba66239e765eae7fc6ebdb97685d560',1,'qspi.h']]],
-  ['dsy_5fqspi_5fmode_1464',['dsy_qspi_mode',['../group__serial.html#ga480feeff5c0b3783a623e31d2c78bdd3',1,'qspi.h']]],
-  ['dsy_5fqspi_5fpin_1465',['dsy_qspi_pin',['../group__serial.html#ga046814b88e5e4a5b745af18535b23353',1,'qspi.h']]],
-  ['dsy_5fsdram_5fpin_1466',['dsy_sdram_pin',['../group__sdram.html#gae5b02cd39e08c80faa1c81edacf38303',1,'sdram.h']]],
-  ['dsy_5fsdram_5fstate_1467',['dsy_sdram_state',['../group__sdram.html#gaa4b8e04989b35adf4cd19ae52235a03e',1,'sdram.h']]]
+  ['channel_0',['Channel',['../classdaisy_1_1_dac_handle.html#a43de298bdbb02c15b2a35948a15c7125',1,'daisy::DacHandle']]],
+  ['channelmodetype_1',['ChannelModeType',['../group__midi__events.html#gaf9da54b73be4dec526670bd6c53ad98a',1,'daisy']]],
+  ['clockphase_2',['ClockPhase',['../structdaisy_1_1_spi_handle_1_1_config.html#a2ecef0d5dcfbdbdf6d2f91296f118a57',1,'daisy::SpiHandle::Config']]],
+  ['clockpolarity_3',['ClockPolarity',['../structdaisy_1_1_spi_handle_1_1_config.html#a1d8556f306b61df88d6f08ebd6b9ba24',1,'daisy::SpiHandle::Config']]],
+  ['colororder_4',['ColorOrder',['../structdaisy_1_1_dot_star_1_1_config.html#ac0d32307f8104690f4a6d15dd1943ae9',1,'daisy::DotStar::Config']]],
+  ['conversionspeed_5',['ConversionSpeed',['../structdaisy_1_1_adc_channel_config.html#ac61c5abf5459809448682b6862f21c09',1,'daisy::AdcChannelConfig']]],
+  ['counterdir_6',['CounterDir',['../structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7b',1,'daisy::TimerHandle::Config']]],
+  ['ctrl_7',['Ctrl',['../classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3',1,'daisy::DaisyPatch']]],
+  ['curve_8',['Curve',['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594da',1,'daisy::Parameter']]]
 ];

@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['parameter_1016',['Parameter',['../classdaisy_1_1_parameter.html',1,'daisy']]],
-  ['pcm3060_1017',['Pcm3060',['../classdaisy_1_1_pcm3060.html',1,'daisy']]],
-  ['pitchbendevent_1018',['PitchBendEvent',['../struct_pitch_bend_event.html',1,'']]],
-  ['polymodeonevent_1019',['PolyModeOnEvent',['../struct_poly_mode_on_event.html',1,'']]],
-  ['polyphonickeypressureevent_1020',['PolyphonicKeyPressureEvent',['../struct_polyphonic_key_pressure_event.html',1,'']]],
-  ['programchangeevent_1021',['ProgramChangeEvent',['../struct_program_change_event.html',1,'']]]
+  ['neopixel_0',['NeoPixel',['../classdaisy_1_1_neo_pixel.html',1,'daisy']]],
+  ['neopixel_3c_20neopixeli2ctransport_20_3e_1',['NeoPixel&lt; NeoPixelI2CTransport &gt;',['../classdaisy_1_1_neo_pixel.html',1,'daisy']]],
+  ['neopixeli2ctransport_2',['NeoPixelI2CTransport',['../classdaisy_1_1_neo_pixel_i2_c_transport.html',1,'daisy']]],
+  ['neotrellis_3',['NeoTrellis',['../classdaisy_1_1_neo_trellis.html',1,'daisy']]],
+  ['neotrellisi2ctransport_4',['NeoTrellisI2CTransport',['../classdaisy_1_1_neo_trellis_i2_c_transport.html',1,'daisy']]],
+  ['noteoffevent_5',['NoteOffEvent',['../structdaisy_1_1_note_off_event.html',1,'daisy']]],
+  ['noteonevent_6',['NoteOnEvent',['../structdaisy_1_1_note_on_event.html',1,'daisy']]]
 ];

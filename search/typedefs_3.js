@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['inputbuffer_1436',['InputBuffer',['../classdaisy_1_1_audio_handle.html#ac7317ab5e51e18172be03af8bfb194f6',1,'daisy::AudioHandle']]],
-  ['interleavingaudiocallback_1437',['InterleavingAudioCallback',['../classdaisy_1_1_audio_handle.html#a125528dd20d6657e53ab78341cbdbb91',1,'daisy::AudioHandle']]],
-  ['interleavinginputbuffer_1438',['InterleavingInputBuffer',['../classdaisy_1_1_audio_handle.html#a4e0f74f2093de2f0762d51ca915af01d',1,'daisy::AudioHandle']]],
-  ['interleavingoutputbuffer_1439',['InterleavingOutputBuffer',['../classdaisy_1_1_audio_handle.html#a2d737450dbb443fc13f12134a46b43e4',1,'daisy::AudioHandle']]]
+  ['endcallbackfunctionptr_0',['endcallbackfunctionptr',['../classdaisy_1_1_spi_handle.html#a239cd884e622201118be911ffd155570',1,'daisy::SpiHandle::EndCallbackFunctionPtr'],['../classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67',1,'daisy::UartHandler::EndCallbackFunctionPtr']]],
+  ['errorcallback_1',['ErrorCallback',['../classdaisy_1_1_u_s_b_host_handle.html#a3762ad32c165180cad9acd5d108a81bc',1,'daisy::USBHostHandle']]]
 ];

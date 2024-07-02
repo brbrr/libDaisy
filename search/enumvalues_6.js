@@ -1,10 +1,17 @@
 var searchData=
 [
-  ['i2c_5f1_1558',['I2C_1',['../structdaisy_1_1_i2_c_handle_1_1_config.html#ad59ff761df0f73062c2e5602fb67e9d3ac6fd6f26e2aa63abe2238fab4b47dd79',1,'daisy::I2CHandle::Config']]],
-  ['i2c_5f100khz_1559',['I2C_100KHZ',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a744f7d6297a06e87fe2e2014f05d469ea553b1e80b412bd08e176aac5f3ab4cb9',1,'daisy::I2CHandle::Config']]],
-  ['i2c_5f1mhz_1560',['I2C_1MHZ',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a744f7d6297a06e87fe2e2014f05d469eae8625e0ea19033600b2fe93cf1709250',1,'daisy::I2CHandle::Config']]],
-  ['i2c_5f2_1561',['I2C_2',['../structdaisy_1_1_i2_c_handle_1_1_config.html#ad59ff761df0f73062c2e5602fb67e9d3a4df67eab35d40f92e3e08f3e92c42f07',1,'daisy::I2CHandle::Config']]],
-  ['i2c_5f3_1562',['I2C_3',['../structdaisy_1_1_i2_c_handle_1_1_config.html#ad59ff761df0f73062c2e5602fb67e9d3a953b2c7701d3e795fe6f524ab7ba0966',1,'daisy::I2CHandle::Config']]],
-  ['i2c_5f4_1563',['I2C_4',['../structdaisy_1_1_i2_c_handle_1_1_config.html#ad59ff761df0f73062c2e5602fb67e9d3acb1bc673df00194e6f8091f5130dd6c1',1,'daisy::I2CHandle::Config']]],
-  ['i2c_5f400khz_1564',['I2C_400KHZ',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a744f7d6297a06e87fe2e2014f05d469ea18db2d43c0673a83aa3629f1e0bc2d07',1,'daisy::I2CHandle::Config']]]
+  ['gate_5fin_5f1_0',['GATE_IN_1',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch']]],
+  ['gate_5fin_5f2_1',['GATE_IN_2',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953aeb1a7f107d3bea8644640cf6b8a3f6ef',1,'daisy::DaisyPatch']]],
+  ['gate_5fin_5flast_2',['GATE_IN_LAST',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953ad276bd6100dc0a8ef5c4b9aa307f45cc',1,'daisy::DaisyPatch']]],
+  ['gbr_3',['GBR',['../structdaisy_1_1_dot_star_1_1_config.html#ac0d32307f8104690f4a6d15dd1943ae9a17de729c71f03c1ff0acc4e67f69b8f7',1,'daisy::DotStar::Config']]],
+  ['gold_4',['GOLD',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a0b32c5df8961411a66895e57509677ac',1,'daisy::Color']]],
+  ['good_5',['GOOD',['../classdaisy_1_1_q_s_p_i_handle.html#a130e764ad0cd53c10c0bc85193e8c133a52013d74e6bc026f88593af204d2965f',1,'daisy::QSPIHandle']]],
+  ['gpinten_5fa_6',['GPINTEN_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a36d9b832badf88c746235ed381c6daca',1,'daisy']]],
+  ['gpinten_5fb_7',['GPINTEN_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a7cfa90901b6ff4b73d02570e82d593e9',1,'daisy']]],
+  ['gpio_5fa_8',['GPIO_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a9003cf0633ee01bbdd228799eadbb723',1,'daisy']]],
+  ['gpio_5fb_9',['GPIO_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a0a9c24b413104e1862e9ea90e3cc55f9',1,'daisy']]],
+  ['gppu_5fa_10',['GPPU_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a8f5c96f20d4ff1ba9935f0f10bbf0dac',1,'daisy']]],
+  ['gppu_5fb_11',['GPPU_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46ad4296604bacc90df6b4ce96d179e37ad',1,'daisy']]],
+  ['grb_12',['GRB',['../structdaisy_1_1_dot_star_1_1_config.html#ac0d32307f8104690f4a6d15dd1943ae9aef262b7c983bc8bbbead319ea4c02c62',1,'daisy::DotStar::Config']]],
+  ['green_13',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]]
 ];

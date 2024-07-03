@@ -96,7 +96,7 @@ extern "C"
 #define CFG_TUD_CDC 1
 #define CFG_TUD_MSC 0
 #define CFG_TUD_HID 0
-#define CFG_TUD_MIDI 0
+#define CFG_TUD_MIDI 1
 #define CFG_TUD_VENDOR 0
 
 // CDC FIFO size of TX and RX
@@ -105,6 +105,11 @@ extern "C"
 
 // CDC Endpoint transfer buffer size, more is faster
 #define CFG_TUD_CDC_EP_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)
+
+// MIDI FIFO size of TX and RX
+#define CFG_TUD_MIDI_RX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)
+#define CFG_TUD_MIDI_TX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)
+
 
 #ifdef __cplusplus
 }

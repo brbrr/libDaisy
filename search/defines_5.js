@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['libdaisy_5fver_5fmaj_0',['LIBDAISY_VER_MAJ',['../version_8h.html#a5f8da3a1e71e5dcbe69ce725186df1ad',1,'version.h']]],
-  ['libdaisy_5fver_5fmin_1',['LIBDAISY_VER_MIN',['../version_8h.html#aa15a78646d831c7245dd640d9d51f9e1',1,'version.h']]],
-  ['libdaisy_5fver_5fpatch_2',['LIBDAISY_VER_PATCH',['../version_8h.html#a0d0ecce2518e425fedd17e7e385cdc19',1,'version.h']]]
+  ['ff_5ffree_0',['ff_free',['../ffconf_8h.html#ac7b5118894bfc43cc0d19f7290a7be0c',1,'ffconf.h']]],
+  ['ff_5fmalloc_1',['ff_malloc',['../ffconf_8h.html#a1eee011a3d69ab8a3d199b985fe2ad36',1,'ffconf.h']]]
 ];

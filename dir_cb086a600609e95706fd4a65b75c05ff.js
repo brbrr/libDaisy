@@ -15,6 +15,7 @@ var dir_cb086a600609e95706fd4a65b75c05ff =
     [ "rgb_led.h", "rgb__led_8h.html", "rgb__led_8h" ],
     [ "switch.h", "switch_8h.html", "switch_8h" ],
     [ "switch3.h", "switch3_8h.html", "switch3_8h" ],
+    [ "tusb_config.h", "tusb__config_8h.html", "tusb__config_8h" ],
     [ "usb.h", "usb_8h.html", "usb_8h" ],
     [ "usb_host.h", "usb__host_8h.html", "usb__host_8h" ],
     [ "usb_midi.h", "usb__midi_8h.html", "usb__midi_8h" ],

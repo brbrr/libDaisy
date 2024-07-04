@@ -65,5 +65,6 @@ var classdaisy_1_1_neo_trellis =
     [ "SWReset", "classdaisy_1_1_neo_trellis.html#ae052cf27a7ad81a8c63f6cc70080ac66", null ],
     [ "UnregisterCallback", "classdaisy_1_1_neo_trellis.html#a225ba959691d43790280be96c3b1ac5e", null ],
     [ "Write8", "classdaisy_1_1_neo_trellis.html#a44fb6268b8e48d1251699e88ecce9a40", null ],
+    [ "e", "classdaisy_1_1_neo_trellis.html#a3300d80b7b95b07f182b417c15f7c847", null ],
     [ "pixels", "classdaisy_1_1_neo_trellis.html#a3a394cd04738f34e23963f0948cf1fc3", null ]
 ];

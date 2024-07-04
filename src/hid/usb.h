@@ -76,7 +76,9 @@ class UsbHandle
      */
     static void RunTask();
 
-    static void TestCDC();
+    static void AudioTask();
+    static void MidiTask();
+    static void CdcTask();
 
 
   private:

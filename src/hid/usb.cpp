@@ -96,8 +96,9 @@ void UsbHandle::RunTask()
 
 using DBG = daisy::Logger<daisy::LOGGER_INTERNAL>;
 
-const uint32_t sample_rates[]      = {44100, 48000};
-uint32_t       current_sample_rate = 44100;
+const uint32_t sample_rates[] = {48000};
+// const uint32_t sample_rates[]      = {44100, 48000};
+uint32_t current_sample_rate = 48000;
 
 #define N_SAMPLE_RATES TU_ARRAY_SIZE(sample_rates)
 
@@ -340,27 +341,10 @@ bool tud_audio_set_itf_close_EP_cb(uint8_t                       rhport,
 {
     (void)rhport;
 
-    // uint8_t const itf = tu_u16_low(tu_le16toh(p_request->wIndex));
-    // uint8_t const alt = tu_u16_low(tu_le16toh(p_request->wValue));
-
-    return true;
-}
-
-bool tud_audio_set_itf_cb(uint8_t                       rhport,
-                          tusb_control_request_t const *p_request)
-{
-    (void)rhport;
-    // uint8_t const itf = tu_u16_low(tu_le16toh(p_request->wIndex));
+    uint8_t const itf = tu_u16_low(tu_le16toh(p_request->wIndex));
     uint8_t const alt = tu_u16_low(tu_le16toh(p_request->wValue));
 
-    TU_LOG2("Set interface %d alt %d\r\n", itf, alt);
-
-    // Clear buffer when streaming format is changed
-    spk_data_size = 0;
-    if(alt != 0)
-    {
-        current_resolution = resolutions_per_format[alt - 1];
-    }
+    DBG::Print("Close EP ift: %d alt: %d\r\n", itf, alt);
 
     return true;
 }
@@ -379,20 +363,6 @@ bool tud_audio_rx_done_pre_read_cb(uint8_t  rhport,
     // spk_data_size = tud_audio_read(spk_buf, n_bytes_received);
     // tud_audio_write(spk_buf, n_bytes_received);
 
-    return true;
-}
-
-bool tud_audio_tx_done_pre_load_cb(uint8_t rhport,
-                                   uint8_t itf,
-                                   uint8_t ep_in,
-                                   uint8_t cur_alt_setting)
-{
-    (void)rhport;
-    (void)itf;
-    (void)ep_in;
-    (void)cur_alt_setting;
-
-    // This callback could be used to fill microphone data separately
     return true;
 }
 

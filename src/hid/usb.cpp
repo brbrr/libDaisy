@@ -96,11 +96,17 @@ void UsbHandle::RunTask()
 
 using DBG = daisy::Logger<daisy::LOGGER_INTERNAL>;
 
-const uint32_t sample_rates[] = {48000};
+// const uint32_t sample_rates[] = {48000};
 // const uint32_t sample_rates[]      = {44100, 48000};
-uint32_t current_sample_rate = 48000;
+static int32_t current_sample_rate = 48000;
 
-#define N_SAMPLE_RATES TU_ARRAY_SIZE(sample_rates)
+// #define N_SAMPLE_RATES TU_ARRAY_SIZE(sample_rates)
+
+audio_control_range_4_n_t(1) rangef = {
+    .wNumSubRanges = 1,
+    {
+        {.bMin = current_sample_rate, .bMax = current_sample_rate, .bRes = 0},
+    }};
 
 
 // Audio controls
@@ -109,24 +115,11 @@ int8_t mute[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX + 1]; // +1 for master channel 0
 int16_t
     volume[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX + 1]; // +1 for master channel 0
 
-// Buffer for microphone data
-int32_t mic_buf[CFG_TUD_AUDIO_FUNC_1_EP_IN_SW_BUF_SZ / 4];
-// Buffer for speaker data
-int32_t spk_buf[CFG_TUD_AUDIO_FUNC_1_EP_OUT_SW_BUF_SZ / 4];
-// Speaker data size received in the last frame
-int spk_data_size;
-// Resolution per format
-const uint8_t resolutions_per_format[CFG_TUD_AUDIO_FUNC_1_N_FORMATS]
-    = {CFG_TUD_AUDIO_FUNC_1_FORMAT_1_RESOLUTION_RX};
-// Current resolution, update on format change
-uint8_t current_resolution;
 
 // Helper for clock get requests
 static bool tud_audio_clock_get_request(uint8_t                        rhport,
                                         audio_control_request_t const *request)
 {
-    DBG::Print("tud_audio_clock_get_request\n");
-
     TU_ASSERT(request->bEntityID == UAC2_ENTITY_CLOCK);
 
     if(request->bControlSelector == AUDIO_CS_CTRL_SAM_FREQ)
@@ -146,20 +139,19 @@ static bool tud_audio_clock_get_request(uint8_t                        rhport,
         }
         else if(request->bRequest == AUDIO_CS_REQ_RANGE)
         {
-            audio_control_range_4_n_t(N_SAMPLE_RATES) rangef
-                = {.wNumSubRanges = tu_htole16(N_SAMPLE_RATES)};
-            DBG::Print("Clock get %d freq ranges\r\n", N_SAMPLE_RATES);
-            for(uint8_t i = 0; i < N_SAMPLE_RATES; i++)
-            {
-                rangef.subrange[i].bMin = (int32_t)sample_rates[i];
-                rangef.subrange[i].bMax = (int32_t)sample_rates[i];
-                rangef.subrange[i].bRes = 0;
-                DBG::Print("Range %d (%d, %d, %d)\r\n",
-                           i,
-                           (int)rangef.subrange[i].bMin,
-                           (int)rangef.subrange[i].bMax,
-                           (int)rangef.subrange[i].bRes);
-            }
+            // audio_control_range_4_n_t(N_SAMPLE_RATES) rangef
+            //     = {.wNumSubRanges = tu_htole16(N_SAMPLE_RATES)};
+            // DBG::Print("Clock get %d freq ranges\r\n", N_SAMPLE_RATES);
+            // for(uint8_t i = 0; i < 1; i++)
+            // {
+            //     rangef.subrange[i].bMin = (int32_t)sample_rates[i];
+            //     rangef.subrange[i].bMax = (int32_t)sample_rates[i];
+            //     rangef.subrange[i].bRes = 0;
+            DBG::Print("Range (%d, %d, %d)\r\n",
+                       rangef.subrange[0].bMin,
+                       rangef.subrange[0].bMax,
+                       rangef.subrange[0].bRes);
+            // }
 
             return tud_audio_buffer_and_schedule_control_xfer(
                 rhport,
@@ -193,10 +185,6 @@ static bool tud_audio_clock_set_request(uint8_t                        rhport,
                                         audio_control_request_t const *request,
                                         uint8_t const                 *buf)
 {
-    (void)rhport;
-    DBG::Print("tud_audio_clock_set_request\n");
-
-
     TU_ASSERT(request->bEntityID == UAC2_ENTITY_CLOCK);
     TU_VERIFY(request->bRequest == AUDIO_CS_REQ_CUR);
 
@@ -229,7 +217,6 @@ static bool
 tud_audio_feature_unit_get_request(uint8_t                        rhport,
                                    audio_control_request_t const *request)
 {
-    DBG::Print("tud_audio_feature_unit_get_request\n");
     return false;
 }
 
@@ -239,10 +226,6 @@ tud_audio_feature_unit_set_request(uint8_t                        rhport,
                                    audio_control_request_t const *request,
                                    uint8_t const                 *buf)
 {
-    (void)rhport;
-    DBG::Print("tud_audio_feature_unit_set_request\n");
-
-
     TU_ASSERT(request->bEntityID == UAC2_ENTITY_SPK_FEATURE_UNIT);
     TU_VERIFY(request->bRequest == AUDIO_CS_REQ_CUR);
 
@@ -292,8 +275,6 @@ tud_audio_feature_unit_set_request(uint8_t                        rhport,
 bool tud_audio_get_req_entity_cb(uint8_t                       rhport,
                                  tusb_control_request_t const *p_request)
 {
-    DBG::Print("tud_audio_get_req_entity_cb\n");
-
     audio_control_request_t const *request
         = (audio_control_request_t const *)p_request;
 
@@ -318,8 +299,6 @@ bool tud_audio_set_req_entity_cb(uint8_t                       rhport,
                                  tusb_control_request_t const *p_request,
                                  uint8_t                      *buf)
 {
-    DBG::Print("tud_audio_set_req_entity_cb\n");
-
     audio_control_request_t const *request
         = (audio_control_request_t const *)p_request;
 
@@ -336,48 +315,7 @@ bool tud_audio_set_req_entity_cb(uint8_t                       rhport,
     return false;
 }
 
-bool tud_audio_set_itf_close_EP_cb(uint8_t                       rhport,
-                                   tusb_control_request_t const *p_request)
-{
-    (void)rhport;
-
-    uint8_t const itf = tu_u16_low(tu_le16toh(p_request->wIndex));
-    uint8_t const alt = tu_u16_low(tu_le16toh(p_request->wValue));
-
-    DBG::Print("Close EP ift: %d alt: %d\r\n", itf, alt);
-
-    return true;
-}
-
-bool tud_audio_rx_done_pre_read_cb(uint8_t  rhport,
-                                   uint16_t n_bytes_received,
-                                   uint8_t  func_id,
-                                   uint8_t  ep_out,
-                                   uint8_t  cur_alt_setting)
-{
-    (void)rhport;
-    (void)func_id;
-    (void)ep_out;
-    (void)cur_alt_setting;
-
-    // spk_data_size = tud_audio_read(spk_buf, n_bytes_received);
-    // tud_audio_write(spk_buf, n_bytes_received);
-
-    return true;
-}
-
-void UsbHandle::AudioTask()
-{
-    // tud_audio__init();
-    // Check if device is ready and connected
-    // if(tud_audio_mounted())
-    // {
-    // Process audio data
-    // For example, if you're implementing a microphone:
-    // int16_t sample = INT16_MAX;
-    // tud_audio_write(&sample, sizeof(sample));
-    // }
-}
+void UsbHandle::AudioTask() {}
 
 uint16_t count = 0;
 

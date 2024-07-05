@@ -18,7 +18,7 @@ class TUsbAudio::Impl
     bool IsTxActive() const { return tx_active_; }
     void PrepAudio(const float* buf, size_t size)
     {
-        if(!tx_active_)
+        if(!tx_active_ || !tud_audio_mounted())
         {
             return;
         }

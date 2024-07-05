@@ -12,11 +12,12 @@ var searchData=
   ['midihandler_9',['MidiHandler',['../classdaisy_1_1_midi_handler.html',1,'daisy']]],
   ['midihandler_3c_20midiuarttransport_20_3e_10',['MidiHandler&lt; MidiUartTransport &gt;',['../classdaisy_1_1_midi_handler.html',1,'daisy']]],
   ['midiparser_11',['MidiParser',['../classdaisy_1_1_midi_parser.html',1,'daisy']]],
-  ['midiuarttransport_12',['MidiUartTransport',['../classdaisy_1_1_midi_uart_transport.html',1,'daisy']]],
-  ['midiusbtransport_13',['MidiUsbTransport',['../classdaisy_1_1_midi_usb_transport.html',1,'daisy']]],
-  ['monomodeonevent_14',['MonoModeOnEvent',['../structdaisy_1_1_mono_mode_on_event.html',1,'daisy']]],
-  ['mpr121_15',['Mpr121',['../classdaisy_1_1_mpr121.html',1,'daisy']]],
-  ['mpr121i2ctransport_16',['Mpr121I2CTransport',['../classdaisy_1_1_mpr121_i2_c_transport.html',1,'daisy']]],
-  ['mtcquarterframeevent_17',['MTCQuarterFrameEvent',['../structdaisy_1_1_m_t_c_quarter_frame_event.html',1,'daisy']]],
-  ['multislavespihandle_18',['MultiSlaveSpiHandle',['../classdaisy_1_1_multi_slave_spi_handle.html',1,'daisy']]]
+  ['miditusbtransport_12',['MidiTUsbTransport',['../classdaisy_1_1_midi_t_usb_transport.html',1,'daisy']]],
+  ['midiuarttransport_13',['MidiUartTransport',['../classdaisy_1_1_midi_uart_transport.html',1,'daisy']]],
+  ['midiusbtransport_14',['MidiUsbTransport',['../classdaisy_1_1_midi_usb_transport.html',1,'daisy']]],
+  ['monomodeonevent_15',['MonoModeOnEvent',['../structdaisy_1_1_mono_mode_on_event.html',1,'daisy']]],
+  ['mpr121_16',['Mpr121',['../classdaisy_1_1_mpr121.html',1,'daisy']]],
+  ['mpr121i2ctransport_17',['Mpr121I2CTransport',['../classdaisy_1_1_mpr121_i2_c_transport.html',1,'daisy']]],
+  ['mtcquarterframeevent_18',['MTCQuarterFrameEvent',['../structdaisy_1_1_m_t_c_quarter_frame_event.html',1,'daisy']]],
+  ['multislavespihandle_19',['MultiSlaveSpiHandle',['../classdaisy_1_1_multi_slave_spi_handle.html',1,'daisy']]]
 ];

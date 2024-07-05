@@ -9,5 +9,7 @@ var searchData=
   ['tlv493d_5fmeasurement_5freadout_6',['TLV493D_MEASUREMENT_READOUT',['../tlv493d_8h.html#a6831dc9974fe03f1b06e10d66513a2cb',1,'tlv493d.h']]],
   ['tlv493d_5fnum_5fof_5fregmasks_7',['TLV493D_NUM_OF_REGMASKS',['../tlv493d_8h.html#af45b03bd550c3a46044bb7e61b7955eb',1,'tlv493d.h']]],
   ['tlv493d_5ftemp_5fmult_8',['TLV493D_TEMP_MULT',['../tlv493d_8h.html#ad5972ae40a67ea23290b2ecdc20527fe',1,'tlv493d.h']]],
-  ['tlv493d_5ftemp_5foffset_9',['TLV493D_TEMP_OFFSET',['../tlv493d_8h.html#aff250ce04ccd5a141c7212aa2822e3d9',1,'tlv493d.h']]]
+  ['tlv493d_5ftemp_5foffset_9',['TLV493D_TEMP_OFFSET',['../tlv493d_8h.html#aff250ce04ccd5a141c7212aa2822e3d9',1,'tlv493d.h']]],
+  ['tud_5faudio_5fheadset_5fstereo_5fdesc_5flen_10',['TUD_AUDIO_HEADSET_STEREO_DESC_LEN',['../usb__descriptors_8h.html#a2344d9ad993e3e3406e85649122f2ebb',1,'usb_descriptors.h']]],
+  ['tud_5faudio_5fheadset_5fstereo_5fdescriptor_11',['TUD_AUDIO_HEADSET_STEREO_DESCRIPTOR',['../usb__descriptors_8h.html#a6f9ed68e9ea0d24a01d02db3c57d2efa',1,'usb_descriptors.h']]]
 ];

@@ -27,7 +27,7 @@ var searchData=
   ['intcap_5fb_24',['INTCAP_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46afaf749c30bc70064eac7a489bdb663de',1,'daisy']]],
   ['intcon_5fa_25',['INTCON_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46aae939399633a19df2d5168a9aa02502e',1,'daisy']]],
   ['intcon_5fb_26',['INTCON_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46ab00edfb5d2b8042a604c477d70b45a14',1,'daisy']]],
-  ['internal_27',['INTERNAL',['../structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61a7823cd640b9527fc8a9e6a767d08a992',1,'daisy::MidiUsbTransport::Config']]],
+  ['internal_27',['internal',['../structdaisy_1_1_midi_t_usb_transport_1_1_config.html#a6b43bbc94738a6706ac8bcd4cd93b58ea382822264fa781df61b34fac9946ffa0',1,'daisy::MidiTUsbTransport::Config::INTERNAL'],['../structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61a7823cd640b9527fc8a9e6a767d08a992',1,'daisy::MidiUsbTransport::Config::INTERNAL']]],
   ['internal_5fflash_28',['INTERNAL_FLASH',['../classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669aeeda8641a23188a815fd86a377be2af3',1,'daisy::System']]],
   ['intf_5fa_29',['INTF_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46aac72176752e7e483699b9bc32cb9a972',1,'daisy']]],
   ['intf_5fb_30',['INTF_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46afaeaddee109eddc54ed92d574a82a60b',1,'daisy']]],
@@ -40,5 +40,13 @@ var searchData=
   ['ipol_5fb_37',['IPOL_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46aa292b36a488f3fa9d045d083636f6656',1,'daisy']]],
   ['is25lp064a_38',['IS25LP064A',['../structdaisy_1_1_q_s_p_i_handle_1_1_config.html#a0723bf91a7658cc79e54a28a030472e6a04991a058595f3e986fba0ab20aaafbd',1,'daisy::QSPIHandle::Config']]],
   ['is25lp080d_39',['IS25LP080D',['../structdaisy_1_1_q_s_p_i_handle_1_1_config.html#a0723bf91a7658cc79e54a28a030472e6ae96a98660fe008a237b06bc66f54dac9',1,'daisy::QSPIHandle::Config']]],
-  ['itcmram_40',['ITCMRAM',['../classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669ab703959029aeef3bb2207b6d2dc3cc87',1,'daisy::System']]]
+  ['itcmram_40',['ITCMRAM',['../classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669ab703959029aeef3bb2207b6d2dc3cc87',1,'daisy::System']]],
+  ['itf_5fnum_5faudio_5fcontrol_41',['ITF_NUM_AUDIO_CONTROL',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9ea739369248dd02f55e3d27b433e2bc25a',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5faudio_5fstreaming_5fmic_42',['ITF_NUM_AUDIO_STREAMING_MIC',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9ea02dda025fa2a92ce6bc2b2e0a4f6139e',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5faudio_5fstreaming_5fspk_43',['ITF_NUM_AUDIO_STREAMING_SPK',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9eab07ab1cfed557aee64e68cda89fc35ce',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5fcdc_44',['ITF_NUM_CDC',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9ea417a1b5f14108f730ac4ba859fb2c198',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5fcdc_5fdata_45',['ITF_NUM_CDC_DATA',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9eafeba5ae5caa5e06004f48aee0bcde1d8',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5fmidi_46',['ITF_NUM_MIDI',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9ea16f594eb81e7692090a77c6d71badcd4',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5fmidi_5fstreaming_47',['ITF_NUM_MIDI_STREAMING',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9ea803c3ae39f266ce5f7e709651dce953b',1,'usb_descriptors.h']]],
+  ['itf_5fnum_5ftotal_48',['ITF_NUM_TOTAL',['../usb__descriptors_8h.html#a05589fbab0657f08285ebdfe93f5ec9ea936a2a3258df7c0ac994897782e04bed',1,'usb_descriptors.h']]]
 ];

@@ -16,5 +16,5 @@ var searchData=
   ['error_5fspeed_5funknown_13',['ERROR_SPEED_UNKNOWN',['../classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113acb2fa42fb45da8593f07308e7323defd',1,'daisy::USBHostHandle']]],
   ['even_14',['EVEN',['../structdaisy_1_1_uart_handler_1_1_config.html#a69458bc285ceaf3e20fba9299e2ea5b8a6634c67f28ba9a80efe941b9519aa106',1,'daisy::UartHandler::Config']]],
   ['exponential_15',['EXPONENTIAL',['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594daac8edf4df75c87b5f6a76181e4466aee3',1,'daisy::Parameter']]],
-  ['external_16',['EXTERNAL',['../structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61a04b6299ba514b1f29d9c01c989677852',1,'daisy::MidiUsbTransport::Config']]]
+  ['external_16',['external',['../structdaisy_1_1_midi_t_usb_transport_1_1_config.html#a6b43bbc94738a6706ac8bcd4cd93b58ea4575f655c207d045a92afcba42799fe3',1,'daisy::MidiTUsbTransport::Config::EXTERNAL'],['../structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61a04b6299ba514b1f29d9c01c989677852',1,'daisy::MidiUsbTransport::Config::EXTERNAL']]]
 ];

@@ -60,7 +60,7 @@ var searchData=
   ['flush1_57',['FLUSH1',['../classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04ebaec1f1224f328e7c60687d3ca97e5b4a9',1,'daisy::WavWriter']]],
   ['flushfuncptr_58',['FlushFuncPtr',['../structdaisy_1_1_ui_canvas_descriptor.html#a500ad5fdd90fbedadb0761d86f0d0d2e',1,'daisy::UiCanvasDescriptor']]],
   ['flushfunction_5f_59',['flushFunction_',['../structdaisy_1_1_ui_canvas_descriptor.html#aa0127385910ed8190d328b30c8bd90ae',1,'daisy::UiCanvasDescriptor']]],
-  ['flushrx_60',['flushrx',['../classdaisy_1_1_midi_uart_transport.html#a7e498cbcb29bc447db934b96252a547f',1,'daisy::MidiUartTransport::FlushRx()'],['../classdaisy_1_1_midi_usb_transport.html#a4509734f8dee64bc260a1a5e940b4b9c',1,'daisy::MidiUsbTransport::FlushRx()']]],
+  ['flushrx_60',['flushrx',['../classdaisy_1_1_midi_uart_transport.html#a7e498cbcb29bc447db934b96252a547f',1,'daisy::MidiUartTransport::FlushRx()'],['../classdaisy_1_1_midi_t_usb_transport.html#a3a8bc77e5b2147ccaa1051587f878945',1,'daisy::MidiTUsbTransport::FlushRx()'],['../classdaisy_1_1_midi_usb_transport.html#a4509734f8dee64bc260a1a5e940b4b9c',1,'daisy::MidiUsbTransport::FlushRx()']]],
   ['fmt_61',['fmt',['../structdaisy_1_1_wm8731_1_1_config.html#a91edb01dd260a86a27fc80705a627435',1,'daisy::Wm8731::Config']]],
   ['font_5f11x18_62',['Font_11x18',['../group__utility.html#gaa94e4e49025255db7783b4295468aedd',1,'oled_fonts.h']]],
   ['font_5f16x26_63',['Font_16x26',['../group__utility.html#ga72e53d9ac78461af8cae3a529842ea09',1,'oled_fonts.h']]],

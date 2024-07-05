@@ -140,121 +140,168 @@ $(document).ready(function(){initNavTree('tusb__config_8h_source.html',''); init
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">//--------------------------------------------------------------------+</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">// Board Specific Configuration</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">//--------------------------------------------------------------------+</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="comment">//--------------------------------------------------------------------+</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="comment">// Board Specific Configuration</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="comment">//--------------------------------------------------------------------+</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">// RHPort number used for device can be defined by board.mk, default to port 0</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#ifndef BOARD_TUD_RHPORT</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a850f6280c7dc9aead785f6bedaaa0fb9">   40</a></span><span class="preprocessor">#define BOARD_TUD_RHPORT 0</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">// RHPort max operational speed can defined by board.mk</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#ifndef BOARD_TUD_MAX_SPEED</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a1d0d7228d7d9fc274b2280cd8e007003">   45</a></span><span class="preprocessor">#define BOARD_TUD_MAX_SPEED OPT_MODE_DEFAULT_SPEED</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment">// COMMON CONFIGURATION</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;<a class="code" href="usb__descriptors_8h.html">usb_descriptors.h</a>&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">// RHPort number used for device can be defined by board.mk, default to port 0</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#ifndef BOARD_TUD_RHPORT</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a850f6280c7dc9aead785f6bedaaa0fb9">   42</a></span><span class="preprocessor">#define BOARD_TUD_RHPORT 0</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">// RHPort max operational speed can defined by board.mk</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#ifndef BOARD_TUD_MAX_SPEED</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a1d0d7228d7d9fc274b2280cd8e007003">   47</a></span><span class="preprocessor">#define BOARD_TUD_MAX_SPEED OPT_MODE_DEFAULT_SPEED</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment">// defined by board.mk</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#ifndef CFG_TUSB_MCU</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ad4e5cd7320e792ae2b886c03ed3b3476">   54</a></span><span class="preprocessor">#define CFG_TUSB_MCU OPT_MCU_STM32H7</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#ifndef CFG_TUSB_OS</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a3d27955bb9aee39c43cb3756ffb372c1">   58</a></span><span class="preprocessor">#define CFG_TUSB_OS OPT_OS_NONE</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#ifndef CFG_TUSB_DEBUG</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a4c102f40f3ecdd15c3c64b3e903e8385">   62</a></span><span class="preprocessor">#define CFG_TUSB_DEBUG 0</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">// Enable Device stack</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a49885f91dd20d11d4f692a931ee57667">   66</a></span><span class="preprocessor">#define CFG_TUD_ENABLED 1</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment">// Default is max speed that hardware controller could support with on-chip PHY</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aa37f3ad3cbb642d9d14ee056dd3e3ca8">   69</a></span><span class="preprocessor">#define CFG_TUD_MAX_SPEED BOARD_TUD_MAX_SPEED</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment"> * Tinyusb use follows macros to declare transferring memory so that they can be put</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment"> * into those specific section.</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"> * e.g</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment"> * - CFG_TUSB_MEM SECTION : __attribute__ (( section(&quot;.usb_ram&quot;) ))</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment"> * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#ifndef CFG_TUSB_MEM_SECTION</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment">// #define CFG_TUSB_MEM_SECTION __attribute__((section(&quot;.sdram_bss&quot;)))</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a360b21fa11ef498d9c4dc49428ab780f">   80</a></span><span class="preprocessor">#define CFG_TUSB_MEM_SECTION __attribute__((section(&quot;.sram1_bss&quot;)))</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#ifndef CFG_TUSB_MEM_ALIGN</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ae46ca7dc14babee346d8af7aa8db403e">   84</a></span><span class="preprocessor">#define CFG_TUSB_MEM_ALIGN __attribute__((aligned(4)))</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="comment">// DEVICE CONFIGURATION</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="comment">// COMMON CONFIGURATION</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment">//--------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">// defined by board.mk</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#ifndef CFG_TUSB_MCU</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ad4e5cd7320e792ae2b886c03ed3b3476">   56</a></span><span class="preprocessor">#define CFG_TUSB_MCU OPT_MCU_STM32H7</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#ifndef CFG_TUSB_OS</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a3d27955bb9aee39c43cb3756ffb372c1">   60</a></span><span class="preprocessor">#define CFG_TUSB_OS OPT_OS_NONE</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#ifndef CFG_TUSB_DEBUG</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a4c102f40f3ecdd15c3c64b3e903e8385">   64</a></span><span class="preprocessor">#define CFG_TUSB_DEBUG 0</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment">// Enable Device stack</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a49885f91dd20d11d4f692a931ee57667">   68</a></span><span class="preprocessor">#define CFG_TUD_ENABLED 1</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment">// Default is max speed that hardware controller could support with on-chip PHY</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aa37f3ad3cbb642d9d14ee056dd3e3ca8">   71</a></span><span class="preprocessor">#define CFG_TUD_MAX_SPEED BOARD_TUD_MAX_SPEED</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment">/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"> * Tinyusb use follows macros to declare transferring memory so that they can be put</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment"> * into those specific section.</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment"> * e.g</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment"> * - CFG_TUSB_MEM SECTION : __attribute__ (( section(&quot;.usb_ram&quot;) ))</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment"> * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#ifndef CFG_TUSB_MEM_SECTION</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment">// #define CFG_TUSB_MEM_SECTION __attribute__((section(&quot;.sdram_bss&quot;)))</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a360b21fa11ef498d9c4dc49428ab780f">   82</a></span><span class="preprocessor">#define CFG_TUSB_MEM_SECTION __attribute__((section(&quot;.sram1_bss&quot;)))</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#ifndef CFG_TUSB_MEM_ALIGN</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ae46ca7dc14babee346d8af7aa8db403e">   86</a></span><span class="preprocessor">#define CFG_TUSB_MEM_ALIGN __attribute__((aligned(4)))</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#ifndef CFG_TUD_ENDPOINT0_SIZE</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a9b99a70dc9fc74ecc23108ab18bbebe4">   92</a></span><span class="preprocessor">#define CFG_TUD_ENDPOINT0_SIZE 64</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment">//------------- CLASS -------------//</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#abaad528b7e9a2e6aef815eece02b0916">   96</a></span><span class="preprocessor">#define CFG_TUD_AUDIO 1</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a7df8fc8e36e96c632d18c5e6a283cbad">   97</a></span><span class="preprocessor">#define CFG_TUD_CDC 1</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a159e8998f430441201fe575035576de3">   98</a></span><span class="preprocessor">#define CFG_TUD_MSC 0</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a59ed1f17152d738c0f50edf02565cd20">   99</a></span><span class="preprocessor">#define CFG_TUD_HID 0</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aa407aa4b24ddb98c5c8c27d533ec0e9a">  100</a></span><span class="preprocessor">#define CFG_TUD_MIDI 1</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a5332fe14c3199537455edc6faaa0ef9b">  101</a></span><span class="preprocessor">#define CFG_TUD_VENDOR 0</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment">// AUDIO CLASS DRIVER CONFIGURATION</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment">// Have a look into audio_device.h for all configurations</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a122397d72a50d21afea5191fe18e6982">  108</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_SAMPLE_RATE 48000</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ab4041e9d65a3c2ae685489b9b3f08c43">  110</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_DESC_LEN TUD_AUDIO_MIC_ONE_CH_DESC_LEN</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a2eb1128626bfc09ee5cf2f2029e3fb96">  111</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_AS_INT \</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">    1 </span><span class="comment">// Number of Standard AS Interface Descriptors (4.9.1) defined per audio function - this is required to be able to remember the current alternate settings of these interfaces - We restrict us here to have a constant number for all audio functions (which means this has to be the maximum number of AS interfaces an audio function has and a second audio function with less AS interfaces just wastes a few bytes)</span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#afa1f950dd14b44b27372079c26947a1a">  113</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_CTRL_BUF_SZ 64 </span><span class="comment">// Size of control request buffer</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="comment">// DEVICE CONFIGURATION</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">// DEVICE CONFIGURATION</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#ifndef CFG_TUD_ENDPOINT0_SIZE</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a9b99a70dc9fc74ecc23108ab18bbebe4">   98</a></span><span class="preprocessor">#define CFG_TUD_ENDPOINT0_SIZE 64</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment">//------------- CLASS -------------//</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a7df8fc8e36e96c632d18c5e6a283cbad">  102</a></span><span class="preprocessor">#define CFG_TUD_CDC 1</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a159e8998f430441201fe575035576de3">  103</a></span><span class="preprocessor">#define CFG_TUD_MSC 0</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a59ed1f17152d738c0f50edf02565cd20">  104</a></span><span class="preprocessor">#define CFG_TUD_HID 0</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aa407aa4b24ddb98c5c8c27d533ec0e9a">  105</a></span><span class="preprocessor">#define CFG_TUD_MIDI 1</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#abaad528b7e9a2e6aef815eece02b0916">  106</a></span><span class="preprocessor">#define CFG_TUD_AUDIO 1</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a5332fe14c3199537455edc6faaa0ef9b">  107</a></span><span class="preprocessor">#define CFG_TUD_VENDOR 0</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="comment">// AUDIO CLASS DRIVER CONFIGURATION</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="comment">//--------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ab4041e9d65a3c2ae685489b9b3f08c43">  113</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_DESC_LEN TUD_AUDIO_HEADSET_STEREO_DESC_LEN</span></div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aad48dcebe54ca31fb03add291ce36731">  115</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_ENABLE_EP_IN 1</span></div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#adf830c5a53702b06025d5b20e835ed07">  116</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_BYTES_PER_SAMPLE_TX \</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">    2 </span><span class="comment">// Driver gets this info from the descriptors - we define it here to use it to setup the descriptors and to do calculations with it below</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#abd94a49aa75190f87b27c22ec8dcdde7">  118</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX \</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">    1 </span><span class="comment">// Driver gets this info from the descriptors - we define it here to use it to setup the descriptors and to do calculations with it below - be aware: for different number of channels you need another descriptor!</span></div>
-<div class="foldopen" id="foldopen00120" data-start="" data-end="">
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#af0c1cef6d362ed829170f0e1f6287cbe">  120</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_EP_SZ_IN                                    \</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">    TUD_AUDIO_EP_SIZE(CFG_TUD_AUDIO_FUNC_1_SAMPLE_RATE,           \</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="preprocessor">                      CFG_TUD_AUDIO_FUNC_1_N_BYTES_PER_SAMPLE_TX, \</span></div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">                      CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX)</span></div>
-</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ac01282f9e83cee3e7a691e39974be823">  124</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_EP_IN_SZ_MAX CFG_TUD_AUDIO_EP_SZ_IN</span></div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a2f44e968494e29ffba870fde3e635609">  125</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_EP_IN_SW_BUF_SZ \</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">    (TUD_OPT_HIGH_SPEED ? 8 : 1)             \</span></div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">        * CFG_TUD_AUDIO_EP_SZ_IN </span><span class="comment">// Example write FIFO every 1ms, so it should be 8 times larger for HS device</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment">// How many formats are used, need to adjust USB descriptor if changed</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#acf3964f7ad700351efb4a85b2e57e8bc">  116</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_FORMATS 1</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment">// Audio format type I specifications</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#if defined(__RX__)</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_MAX_SAMPLE_RATE \</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">    48000 </span><span class="comment">// 16bit/48kHz is the best quality for Renesas RX</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#af8a8b7412748b60d75b388bda836820a">  123</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_MAX_SAMPLE_RATE \</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="preprocessor">    96000 </span><span class="comment">// 24bit/96kHz is the best quality for full-speed, high-speed is needed beyond this</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#abd94a49aa75190f87b27c22ec8dcdde7">  126</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX 2</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a9b580b2ca9c1388de678e6028c372fbb">  127</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX 2 </span><span class="comment">// Changed</span></div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment">// CDC FIFO size of TX and RX</span></div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a0be811273fed0a24763e4a22700e2b1d">  131</a></span><span class="preprocessor">#define CFG_TUD_CDC_RX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a1583fbe8a2453ca3a5986bd6633390c4">  132</a></span><span class="preprocessor">#define CFG_TUD_CDC_TX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">// CDC Endpoint transfer buffer size, more is faster</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a9484fcfe46fd923c94d7fdd93af1179b">  135</a></span><span class="preprocessor">#define CFG_TUD_CDC_EP_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="comment">// MIDI FIFO size of TX and RX</span></div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a66785f976456b0f6b29e8c3e988d6f17">  138</a></span><span class="preprocessor">#define CFG_TUD_MIDI_RX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a38d730e21eca1a3294286809eaa9a57f">  139</a></span><span class="preprocessor">#define CFG_TUD_MIDI_TX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>}</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="preprocessor">#endif </span><span class="comment">/* _TUSB_CONFIG_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="comment">// 16bit in 16bit slots</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a8188c8f404126e2e7582659b9055cc91">  130</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_N_BYTES_PER_SAMPLE_TX 2</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#af864ea70fa507be46cdeff4904c5fa48">  131</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_RESOLUTION_TX 16</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a0d8ffdcf3a9d69aebe17d759ff98cb21">  132</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_N_BYTES_PER_SAMPLE_RX 2</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a208411d510893af3c85755fc223ae093">  133</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_RESOLUTION_RX 16</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment">// EP and buffer size - for isochronous EP´s, the buffer and EP size are equal (different sizes would not make sense)</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aad48dcebe54ca31fb03add291ce36731">  137</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_ENABLE_EP_IN 1</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="foldopen" id="foldopen00139" data-start="" data-end="">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#aae5d1cef0842932f3d1b35c5e2caa2f7">  139</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_IN                             \</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="preprocessor">    TUD_AUDIO_EP_SIZE(CFG_TUD_AUDIO_FUNC_1_MAX_SAMPLE_RATE,                \</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="preprocessor">                      CFG_TUD_AUDIO_FUNC_1_FORMAT_1_N_BYTES_PER_SAMPLE_TX, \</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="preprocessor">                      CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX)</span></div>
+</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="foldopen" id="foldopen00144" data-start="" data-end="">
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a2f44e968494e29ffba870fde3e635609">  144</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_EP_IN_SW_BUF_SZ       \</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="preprocessor">    TU_MAX(CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_IN, \</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="preprocessor">           CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_IN)</span></div>
+</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#ac01282f9e83cee3e7a691e39974be823">  147</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_EP_IN_SZ_MAX       \</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="preprocessor">    TU_MAX(                                     \</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">        CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_IN, \</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">        CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_IN) </span><span class="comment">// Maximum EP IN size for all AS alternate settings used</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment">// EP and buffer size - for isochronous EP´s, the buffer and EP size are equal (different sizes would not make sense)</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a0b299e012d39b1aa4659690c4f198b57">  153</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_ENABLE_EP_OUT 1</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="foldopen" id="foldopen00155" data-start="" data-end="">
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a8faa32f39673334ba3ff515f7b38526a">  155</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_OUT                            \</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="preprocessor">    TUD_AUDIO_EP_SIZE(CFG_TUD_AUDIO_FUNC_1_MAX_SAMPLE_RATE,                \</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">                      CFG_TUD_AUDIO_FUNC_1_FORMAT_1_N_BYTES_PER_SAMPLE_RX, \</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="preprocessor">                      CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX)</span></div>
+</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="foldopen" id="foldopen00160" data-start="" data-end="">
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a13be1f904bc346b715d91bd8c380750d">  160</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_EP_OUT_SW_BUF_SZ       \</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="preprocessor">    TU_MAX(CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_OUT, \</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="preprocessor">           CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_OUT)</span></div>
+</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a733a6eeb934404a8071ce4cc32e03c76">  163</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_EP_OUT_SZ_MAX       \</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="preprocessor">    TU_MAX(                                      \</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">        CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_OUT, \</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="preprocessor">        CFG_TUD_AUDIO_FUNC_1_FORMAT_1_EP_SZ_OUT) </span><span class="comment">// Maximum EP IN size for all AS alternate settings used</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment">// Number of Standard AS Interface Descriptors (4.9.1) defined per audio function - this is required to be able to remember the current alternate settings of these interfaces - We restrict us here to have a constant number for all audio functions (which means this has to be the maximum number of AS interfaces an audio function has and a second audio function with less AS interfaces just wastes a few bytes)</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a2eb1128626bfc09ee5cf2f2029e3fb96">  169</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_N_AS_INT 2</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="comment">// Size of control request buffer</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#afa1f950dd14b44b27372079c26947a1a">  172</a></span><span class="preprocessor">#define CFG_TUD_AUDIO_FUNC_1_CTRL_BUF_SZ 64</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="comment">// CDC FIFO size of TX and RX</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a0be811273fed0a24763e4a22700e2b1d">  175</a></span><span class="preprocessor">#define CFG_TUD_CDC_RX_BUFSIZE 64</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a1583fbe8a2453ca3a5986bd6633390c4">  176</a></span><span class="preprocessor">#define CFG_TUD_CDC_TX_BUFSIZE 64</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment">// MIDI FIFO size of TX and RX</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a66785f976456b0f6b29e8c3e988d6f17">  178</a></span><span class="preprocessor">#define CFG_TUD_MIDI_RX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="tusb__config_8h.html#a38d730e21eca1a3294286809eaa9a57f">  179</a></span><span class="preprocessor">#define CFG_TUD_MIDI_TX_BUFSIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>}</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="preprocessor">#endif </span><span class="comment">/* _TUSB_CONFIG_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="ausb__descriptors_8h_html"><div class="ttname"><a href="usb__descriptors_8h.html">usb_descriptors.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.2-->

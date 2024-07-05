@@ -25,18 +25,18 @@
 
 #include "bsp/board_api.h"
 #include "tusb.h"
+#include "usb_descriptors.h"
 
 /* A combination of interfaces must have a unique product id, since PC will save device driver after the first plug.
  * Same VID/PID with different interface e.g MSC (first), then CDC (later) will possibly cause system error on PC.
  *
  * Auto ProductID layout's Bitmap:
- *   [MSB]         HID | MSC | CDC          [LSB]
+ *   [MSB]     AUDIO | MIDI | HID | MSC | CDC          [LSB]
  */
 #define _PID_MAP(itf, n) ((CFG_TUD_##itf) << (n))
 #define USB_PID                                                      \
     (0x4000 | _PID_MAP(CDC, 0) | _PID_MAP(MSC, 1) | _PID_MAP(HID, 2) \
-     | _PID_MAP(MIDI, 3) | _PID_MAP(VENDOR, 4))
-
+     | _PID_MAP(MIDI, 3) | _PID_MAP(AUDIO, 4) | _PID_MAP(VENDOR, 5))
 #define USB_VID 0xCafe
 #define USB_BCD 0x0200
 
@@ -48,7 +48,7 @@ tusb_desc_device_t const desc_device = {
     .bDescriptorType = TUSB_DESC_DEVICE,
     .bcdUSB          = USB_BCD,
 
-    // Use Interface Association Descriptor (IAD) for CDC
+    // Use Interface Association Descriptor (IAD)
     // As required by USB Specs IAD's subclass must be common class (2) and protocol must be IAD (1)
     .bDeviceClass    = TUSB_CLASS_MISC,
     .bDeviceSubClass = MISC_SUBCLASS_COMMON,
@@ -76,63 +76,46 @@ uint8_t const *tud_descriptor_device_cb(void)
 //--------------------------------------------------------------------+
 // Configuration Descriptor
 //--------------------------------------------------------------------+
-enum
-{
-    ITF_NUM_CDC_0 = 0,
-    ITF_NUM_CDC_0_DATA,
-    ITF_NUM_MIDI,
-    ITF_NUM_MIDI_STREAMING,
-    ITF_NUM_AUDIO_CONTROL,
-    ITF_NUM_AUDIO_STREAMING,
-    ITF_NUM_TOTAL
-};
+#define CONFIG_TOTAL_LEN                                                     \
+    (TUD_CONFIG_DESC_LEN + CFG_TUD_AUDIO * TUD_AUDIO_HEADSET_STEREO_DESC_LEN \
+     + CFG_TUD_CDC * TUD_CDC_DESC_LEN + TUD_MIDI_DESC_LEN)
 
-#define CONFIG_TOTAL_LEN                                                      \
-    (TUD_CONFIG_DESC_LEN + CFG_TUD_CDC * TUD_CDC_DESC_LEN + TUD_MIDI_DESC_LEN \
-     + CFG_TUD_AUDIO * TUD_AUDIO_MIC_ONE_CH_DESC_LEN)
+#define EPNUM_AUDIO_IN 0x01
+#define EPNUM_AUDIO_OUT 0x01
 
+#define EPNUM_CDC_NOTIF 0x83
+#define EPNUM_CDC_OUT 0x04
+#define EPNUM_CDC_IN 0x84
 
-#define EPNUM_AUDIO 0x05
+#define EPNUM_MIDI_OUT 0x05
+#define EPNUM_MIDI_IN 0x05
 
-#define EPNUM_CDC_0_NOTIF 0x81
-#define EPNUM_CDC_0_OUT 0x02
-#define EPNUM_CDC_0_IN 0x82
-
-#define EPNUM_MIDI_OUT 0x04
-#define EPNUM_MIDI_IN 0x04
-
-
-uint8_t const desc_fs_configuration[] = {
+uint8_t const desc_configuration[] = {
     // Config number, interface count, string index, total length, attribute, power in mA
     TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN, 0x00, 100),
 
     // Interface number, string index, EP Out & EP In address, EP size
+    TUD_AUDIO_HEADSET_STEREO_DESCRIPTOR(2,
+                                        EPNUM_AUDIO_OUT,
+                                        EPNUM_AUDIO_IN | 0x80),
+
+    // CDC: Interface number, string index, EP notification address and size, EP data address (out, in) and size.
+    TUD_CDC_DESCRIPTOR(ITF_NUM_CDC,
+                       6,
+                       EPNUM_CDC_NOTIF,
+                       8,
+                       EPNUM_CDC_OUT,
+                       EPNUM_CDC_IN,
+                       64),
+
+    // Interface number, string index, EP Out & EP In address, EP size
     TUD_MIDI_DESCRIPTOR(ITF_NUM_MIDI,
-                        0,
+                        7,
                         EPNUM_MIDI_OUT,
                         (0x80 | EPNUM_MIDI_IN),
                         64),
 
-
-    // 1st CDC: Interface number, string index, EP notification address and size, EP data address (out, in) and size.
-    TUD_CDC_DESCRIPTOR(ITF_NUM_CDC_0,
-                       4,
-                       EPNUM_CDC_0_NOTIF,
-                       8,
-                       EPNUM_CDC_0_OUT,
-                       EPNUM_CDC_0_IN,
-                       64),
-
-    // Interface number, string index, EP Out & EP In address, EP size
-    TUD_AUDIO_MIC_ONE_CH_DESCRIPTOR(
-        /*_itfnum*/ ITF_NUM_AUDIO_CONTROL,
-        /*_stridx*/ 0,
-        /*_nBytesPerSample*/ CFG_TUD_AUDIO_FUNC_1_N_BYTES_PER_SAMPLE_TX,
-        /*_nBitsUsedPerSample*/ CFG_TUD_AUDIO_FUNC_1_N_BYTES_PER_SAMPLE_TX * 8,
-        /*_epin*/ 0x80 | EPNUM_AUDIO,
-        /*_epsize*/ CFG_TUD_AUDIO_EP_SZ_IN),
 };
-
 
 // Invoked when received GET CONFIGURATION DESCRIPTOR
 // Application return pointer to descriptor
@@ -140,8 +123,7 @@ uint8_t const desc_fs_configuration[] = {
 uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
 {
     (void)index; // for multiple configurations
-
-    return desc_fs_configuration;
+    return desc_configuration;
 }
 
 //--------------------------------------------------------------------+
@@ -161,9 +143,12 @@ enum
 char const *string_desc_arr[] = {
     (const char[]){0x09, 0x04}, // 0: is supported language is English (0x0409)
     "TinyUSB",                  // 1: Manufacturer
-    "TinyUSB Device",           // 2: Product
+    "TinyUSB headset",          // 2: Product
     NULL,                       // 3: Serials will use unique ID if possible
-    "TinyUSB CDC",              // 4: CDC Interface
+    "TinyUSB Speakers",         // 4: Audio Interface
+    "TinyUSB Microphone",       // 5: Audio Interface
+    "TinyUSB CDC",              // 6: Audio Interface
+    "TinyUSB MIDI",             // 7: Audio Interface
 };
 
 static uint16_t _desc_str[32 + 1];

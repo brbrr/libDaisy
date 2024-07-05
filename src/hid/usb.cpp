@@ -7,6 +7,9 @@
 
 #include "system.h"
 
+#include "hid/logger.h"
+
+
 using namespace daisy;
 
 static void UsbErrorHandler();
@@ -23,7 +26,7 @@ extern "C"
     extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
     extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
-    void DummyRxCallback(uint8_t* buf, uint32_t* size)
+    void DummyRxCallback(uint8_t *buf, uint32_t *size)
     {
         // Do Nothing
     }
@@ -91,84 +94,292 @@ void UsbHandle::RunTask()
 }
 
 
-// Variable that holds the current position in the sequence.
-uint32_t note_pos = 0;
+using DBG = daisy::Logger<daisy::LOGGER_INTERNAL>;
 
-// Store example melody as an array of note values
-uint8_t note_sequence[]
-    = {74, 78, 81, 86,  90, 93, 98, 102, 57, 61,  66, 69, 73, 78, 81, 85,
-       88, 92, 97, 100, 97, 92, 88, 85,  81, 78,  74, 69, 66, 62, 57, 62,
-       66, 69, 74, 78,  81, 86, 90, 93,  97, 102, 97, 93, 90, 85, 81, 78,
-       73, 68, 64, 61,  56, 61, 64, 68,  74, 78,  81, 86, 90, 93, 98, 102};
+const uint32_t sample_rates[]      = {44100, 48000};
+uint32_t       current_sample_rate = 44100;
 
-void UsbHandle::MidiTask()
+#define N_SAMPLE_RATES TU_ARRAY_SIZE(sample_rates)
+
+
+// Audio controls
+// Current states
+int8_t mute[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX + 1]; // +1 for master channel 0
+int16_t
+    volume[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX + 1]; // +1 for master channel 0
+
+// Buffer for microphone data
+int32_t mic_buf[CFG_TUD_AUDIO_FUNC_1_EP_IN_SW_BUF_SZ / 4];
+// Buffer for speaker data
+int32_t spk_buf[CFG_TUD_AUDIO_FUNC_1_EP_OUT_SW_BUF_SZ / 4];
+// Speaker data size received in the last frame
+int spk_data_size;
+// Resolution per format
+const uint8_t resolutions_per_format[CFG_TUD_AUDIO_FUNC_1_N_FORMATS]
+    = {CFG_TUD_AUDIO_FUNC_1_FORMAT_1_RESOLUTION_RX};
+// Current resolution, update on format change
+uint8_t current_resolution;
+
+// Helper for clock get requests
+static bool tud_audio_clock_get_request(uint8_t                        rhport,
+                                        audio_control_request_t const *request)
 {
-    static uint32_t start_ms = 0;
+    DBG::Print("tud_audio_clock_get_request\n");
 
-    uint8_t const cable_num = 0; // MIDI jack associated with USB endpoint
-    uint8_t const channel   = 0; // 0 for channel 1
+    TU_ASSERT(request->bEntityID == UAC2_ENTITY_CLOCK);
 
-    // The MIDI interface always creates input and output port/jack descriptors
-    // regardless of these being used or not. Therefore incoming traffic should be read
-    // (possibly just discarded) to avoid the sender blocking in IO
-    uint8_t packet[4];
-    while(tud_midi_available())
-        tud_midi_packet_read(packet);
+    if(request->bControlSelector == AUDIO_CS_CTRL_SAM_FREQ)
+    {
+        if(request->bRequest == AUDIO_CS_REQ_CUR)
+        {
+            DBG::Print("Clock get current freq %" PRIu32 "\r\n",
+                       current_sample_rate);
 
-    // send note periodically
-    if(daisy::System::GetNow() - start_ms < 286)
-        return; // not enough time
-    start_ms += 286;
+            audio_control_cur_4_t curf
+                = {(int32_t)tu_htole32(current_sample_rate)};
+            return tud_audio_buffer_and_schedule_control_xfer(
+                rhport,
+                (tusb_control_request_t const *)request,
+                &curf,
+                sizeof(curf));
+        }
+        else if(request->bRequest == AUDIO_CS_REQ_RANGE)
+        {
+            audio_control_range_4_n_t(N_SAMPLE_RATES) rangef
+                = {.wNumSubRanges = tu_htole16(N_SAMPLE_RATES)};
+            DBG::Print("Clock get %d freq ranges\r\n", N_SAMPLE_RATES);
+            for(uint8_t i = 0; i < N_SAMPLE_RATES; i++)
+            {
+                rangef.subrange[i].bMin = (int32_t)sample_rates[i];
+                rangef.subrange[i].bMax = (int32_t)sample_rates[i];
+                rangef.subrange[i].bRes = 0;
+                DBG::Print("Range %d (%d, %d, %d)\r\n",
+                           i,
+                           (int)rangef.subrange[i].bMin,
+                           (int)rangef.subrange[i].bMax,
+                           (int)rangef.subrange[i].bRes);
+            }
 
-    // Previous positions in the note sequence.
-    int previous = (int)(note_pos - 1);
-
-    // If we currently are at position 0, set the
-    // previous position to the last note in the sequence.
-    if(previous < 0)
-        previous = sizeof(note_sequence) - 1;
-
-    // Send Note On for current position at full velocity (127) on channel 1.
-    uint8_t note_on[3] = {0x90 | channel, note_sequence[note_pos], 127};
-    tud_midi_stream_write(cable_num, note_on, 3);
-
-    // Send Note Off for previous note.
-    uint8_t note_off[3] = {0x80 | channel, note_sequence[previous], 0};
-    tud_midi_stream_write(cable_num, note_off, 3);
-
-    // Increment position
-    note_pos++;
-
-    // If we are at the end of the sequence, start over.
-    if(note_pos >= sizeof(note_sequence))
-        note_pos = 0;
+            return tud_audio_buffer_and_schedule_control_xfer(
+                rhport,
+                (tusb_control_request_t const *)request,
+                &rangef,
+                sizeof(rangef));
+        }
+    }
+    else if(request->bControlSelector == AUDIO_CS_CTRL_CLK_VALID
+            && request->bRequest == AUDIO_CS_REQ_CUR)
+    {
+        audio_control_cur_1_t cur_valid = {.bCur = 1};
+        DBG::Print("Clock get is valid %u\r\n", cur_valid.bCur);
+        return tud_audio_buffer_and_schedule_control_xfer(
+            rhport,
+            (tusb_control_request_t const *)request,
+            &cur_valid,
+            sizeof(cur_valid));
+    }
+    DBG::Print(
+        "Clock get request not supported, entity = %u, selector = %u, request "
+        "= %u\r\n",
+        request->bEntityID,
+        request->bControlSelector,
+        request->bRequest);
+    return false;
 }
 
-
-uint16_t test_buffer_audio[(CFG_TUD_AUDIO_EP_SZ_IN - 2) / 2];
-uint16_t startVal = 0;
-
-uint32_t sampFreq;
-uint8_t  clkValid;
-audio_control_range_4_n_t(1) sampleFreqRng; // Sample frequency range state
-
-bool mute[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX + 1]; // +1 for master channel 0
-uint16_t
-    volume[CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX + 1]; // +1 for master channel 0
-
-bool inited = false;
-void tud_audio__init()
+// Helper for clock set requests
+static bool tud_audio_clock_set_request(uint8_t                        rhport,
+                                        audio_control_request_t const *request,
+                                        uint8_t const                 *buf)
 {
-    if(inited)
-        return;
-    inited   = true;
-    sampFreq = CFG_TUD_AUDIO_FUNC_1_SAMPLE_RATE;
-    clkValid = 1;
+    (void)rhport;
+    DBG::Print("tud_audio_clock_set_request\n");
 
-    sampleFreqRng.wNumSubRanges    = 1;
-    sampleFreqRng.subrange[0].bMin = CFG_TUD_AUDIO_FUNC_1_SAMPLE_RATE;
-    sampleFreqRng.subrange[0].bMax = CFG_TUD_AUDIO_FUNC_1_SAMPLE_RATE;
-    sampleFreqRng.subrange[0].bRes = 0;
+
+    TU_ASSERT(request->bEntityID == UAC2_ENTITY_CLOCK);
+    TU_VERIFY(request->bRequest == AUDIO_CS_REQ_CUR);
+
+    if(request->bControlSelector == AUDIO_CS_CTRL_SAM_FREQ)
+    {
+        TU_VERIFY(request->wLength == sizeof(audio_control_cur_4_t));
+
+        current_sample_rate
+            = (uint32_t)((audio_control_cur_4_t const *)buf)->bCur;
+
+        DBG::Print("Clock set current freq: %" PRIu32 "\r\n",
+                   current_sample_rate);
+
+        return true;
+    }
+    else
+    {
+        DBG::Print(
+            "Clock set request not supported, entity = %u, selector = %u, "
+            "request = %u\r\n",
+            request->bEntityID,
+            request->bControlSelector,
+            request->bRequest);
+        return false;
+    }
+}
+
+// Helper for feature unit get requests
+static bool
+tud_audio_feature_unit_get_request(uint8_t                        rhport,
+                                   audio_control_request_t const *request)
+{
+    DBG::Print("tud_audio_feature_unit_get_request\n");
+    return false;
+}
+
+// Helper for feature unit set requests
+static bool
+tud_audio_feature_unit_set_request(uint8_t                        rhport,
+                                   audio_control_request_t const *request,
+                                   uint8_t const                 *buf)
+{
+    (void)rhport;
+    DBG::Print("tud_audio_feature_unit_set_request\n");
+
+
+    TU_ASSERT(request->bEntityID == UAC2_ENTITY_SPK_FEATURE_UNIT);
+    TU_VERIFY(request->bRequest == AUDIO_CS_REQ_CUR);
+
+    if(request->bControlSelector == AUDIO_FU_CTRL_MUTE)
+    {
+        TU_VERIFY(request->wLength == sizeof(audio_control_cur_1_t));
+
+        mute[request->bChannelNumber]
+            = ((audio_control_cur_1_t const *)buf)->bCur;
+
+        DBG::Print("Set channel %d Mute: %d\r\n",
+                   request->bChannelNumber,
+                   mute[request->bChannelNumber]);
+
+        return true;
+    }
+    else if(request->bControlSelector == AUDIO_FU_CTRL_VOLUME)
+    {
+        TU_VERIFY(request->wLength == sizeof(audio_control_cur_2_t));
+
+        volume[request->bChannelNumber]
+            = ((audio_control_cur_2_t const *)buf)->bCur;
+
+        DBG::Print("Set channel %d volume: %d dB\r\n",
+                   request->bChannelNumber,
+                   volume[request->bChannelNumber] / 256);
+
+        return true;
+    }
+    else
+    {
+        DBG::Print(
+            "Feature unit set request not supported, entity = %u, selector = "
+            "%u, request = %u\r\n",
+            request->bEntityID,
+            request->bControlSelector,
+            request->bRequest);
+        return false;
+    }
+}
+
+//--------------------------------------------------------------------+
+// Application Callback API Implementations
+//--------------------------------------------------------------------+
+
+// Invoked when audio class specific get request received for an entity
+bool tud_audio_get_req_entity_cb(uint8_t                       rhport,
+                                 tusb_control_request_t const *p_request)
+{
+    DBG::Print("tud_audio_get_req_entity_cb\n");
+
+    audio_control_request_t const *request
+        = (audio_control_request_t const *)p_request;
+
+    if(request->bEntityID == UAC2_ENTITY_CLOCK)
+        return tud_audio_clock_get_request(rhport, request);
+    if(request->bEntityID == UAC2_ENTITY_SPK_FEATURE_UNIT)
+        return tud_audio_feature_unit_get_request(rhport, request);
+    else
+    {
+        DBG::Print(
+            "Get request not handled, entity = %d, selector = %d, request = "
+            "%d\r\n",
+            request->bEntityID,
+            request->bControlSelector,
+            request->bRequest);
+    }
+    return false;
+}
+
+// Invoked when audio class specific set request received for an entity
+bool tud_audio_set_req_entity_cb(uint8_t                       rhport,
+                                 tusb_control_request_t const *p_request,
+                                 uint8_t                      *buf)
+{
+    DBG::Print("tud_audio_set_req_entity_cb\n");
+
+    audio_control_request_t const *request
+        = (audio_control_request_t const *)p_request;
+
+    if(request->bEntityID == UAC2_ENTITY_SPK_FEATURE_UNIT)
+        return tud_audio_feature_unit_set_request(rhport, request, buf);
+    if(request->bEntityID == UAC2_ENTITY_CLOCK)
+        return tud_audio_clock_set_request(rhport, request, buf);
+    DBG::Print(
+        "Set request not handled, entity = %d, selector = %d, request = %d\r\n",
+        request->bEntityID,
+        request->bControlSelector,
+        request->bRequest);
+
+    return false;
+}
+
+bool tud_audio_set_itf_close_EP_cb(uint8_t                       rhport,
+                                   tusb_control_request_t const *p_request)
+{
+    (void)rhport;
+
+    // uint8_t const itf = tu_u16_low(tu_le16toh(p_request->wIndex));
+    // uint8_t const alt = tu_u16_low(tu_le16toh(p_request->wValue));
+
+    return true;
+}
+
+bool tud_audio_set_itf_cb(uint8_t                       rhport,
+                          tusb_control_request_t const *p_request)
+{
+    (void)rhport;
+    // uint8_t const itf = tu_u16_low(tu_le16toh(p_request->wIndex));
+    uint8_t const alt = tu_u16_low(tu_le16toh(p_request->wValue));
+
+    TU_LOG2("Set interface %d alt %d\r\n", itf, alt);
+
+    // Clear buffer when streaming format is changed
+    spk_data_size = 0;
+    if(alt != 0)
+    {
+        current_resolution = resolutions_per_format[alt - 1];
+    }
+
+    return true;
+}
+
+bool tud_audio_rx_done_pre_read_cb(uint8_t  rhport,
+                                   uint16_t n_bytes_received,
+                                   uint8_t  func_id,
+                                   uint8_t  ep_out,
+                                   uint8_t  cur_alt_setting)
+{
+    (void)rhport;
+    (void)func_id;
+    (void)ep_out;
+    (void)cur_alt_setting;
+
+    // spk_data_size = tud_audio_read(spk_buf, n_bytes_received);
+    // tud_audio_write(spk_buf, n_bytes_received);
+
+    return true;
 }
 
 bool tud_audio_tx_done_pre_load_cb(uint8_t rhport,
@@ -176,197 +387,26 @@ bool tud_audio_tx_done_pre_load_cb(uint8_t rhport,
                                    uint8_t ep_in,
                                    uint8_t cur_alt_setting)
 {
-    // Prepare the next audio data to be sent
-    // Return true if data is ready, false otherwise
-
     (void)rhport;
     (void)itf;
     (void)ep_in;
     (void)cur_alt_setting;
 
-    tud_audio_write((uint8_t*)test_buffer_audio, CFG_TUD_AUDIO_EP_SZ_IN - 2);
-
+    // This callback could be used to fill microphone data separately
     return true;
 }
-
-bool tud_audio_tx_done_post_load_cb(uint8_t  rhport,
-                                    uint16_t n_bytes_copied,
-                                    uint8_t  itf,
-                                    uint8_t  ep_in,
-                                    uint8_t  cur_alt_setting)
-{
-    // Called after audio data has been copied to the USB buffer
-    // Return true if more data is available, false otherwise
-
-    (void)rhport;
-    (void)n_bytes_copied;
-    (void)itf;
-    (void)ep_in;
-    (void)cur_alt_setting;
-
-    for(size_t cnt = 0; cnt < (CFG_TUD_AUDIO_EP_SZ_IN - 2) / 2; cnt++)
-    {
-        test_buffer_audio[cnt] = startVal++;
-    }
-
-    return true;
-}
-
-bool tud_audio_get_req_entity_cb(uint8_t                       rhport,
-                                 tusb_control_request_t const* p_request)
-{
-    (void)rhport;
-
-    // Page 91 in UAC2 specification
-    uint8_t channelNum = TU_U16_LOW(p_request->wValue);
-    uint8_t ctrlSel    = TU_U16_HIGH(p_request->wValue);
-    // uint8_t itf = TU_U16_LOW(p_request->wIndex); 			// Since we have only one audio function implemented, we do not need the itf value
-    uint8_t entityID = TU_U16_HIGH(p_request->wIndex);
-
-    // Input terminal (Microphone input)
-    if(entityID == 1)
-    {
-        switch(ctrlSel)
-        {
-            case AUDIO_TE_CTRL_CONNECTOR:
-            {
-                // The terminal connector control only has a get request with only the CUR attribute.
-                audio_desc_channel_cluster_t ret;
-
-                // Those are dummy values for now
-                ret.bNrChannels     = 1;
-                ret.bmChannelConfig = (audio_channel_config_t)0;
-                ret.iChannelNames   = 0;
-
-                TU_LOG2("    Get terminal connector\r\n");
-
-                return tud_audio_buffer_and_schedule_control_xfer(
-                    rhport, p_request, (void*)&ret, sizeof(ret));
-            }
-            break;
-
-                // Unknown/Unsupported control selector
-            default: TU_BREAKPOINT(); return false;
-        }
-    }
-
-    // Feature unit
-    if(entityID == 2)
-    {
-        switch(ctrlSel)
-        {
-            case AUDIO_FU_CTRL_MUTE:
-                // Audio control mute cur parameter block consists of only one byte - we thus can send it right away
-                // There does not exist a range parameter block for mute
-                TU_LOG2("    Get Mute of channel: %u\r\n", channelNum);
-                return tud_control_xfer(
-                    rhport, p_request, &mute[channelNum], 1);
-
-            case AUDIO_FU_CTRL_VOLUME:
-                switch(p_request->bRequest)
-                {
-                    case AUDIO_CS_REQ_CUR:
-                        TU_LOG2("    Get Volume of channel: %u\r\n",
-                                channelNum);
-                        return tud_control_xfer(rhport,
-                                                p_request,
-                                                &volume[channelNum],
-                                                sizeof(volume[channelNum]));
-
-                    case AUDIO_CS_REQ_RANGE:
-                        TU_LOG2("    Get Volume range of channel: %u\r\n",
-                                channelNum);
-
-                        // Copy values - only for testing - better is version below
-                        audio_control_range_2_n_t(1) ret;
-
-                        ret.wNumSubRanges    = 1;
-                        ret.subrange[0].bMin = -90; // -90 dB
-                        ret.subrange[0].bMax = 90;  // +90 dB
-                        ret.subrange[0].bRes = 1;   // 1 dB steps
-
-                        return tud_audio_buffer_and_schedule_control_xfer(
-                            rhport, p_request, (void*)&ret, sizeof(ret));
-
-                        // Unknown/Unsupported control
-                    default: TU_BREAKPOINT(); return false;
-                }
-                break;
-
-                // Unknown/Unsupported control
-            default: TU_BREAKPOINT(); return false;
-        }
-    }
-
-    // Clock Source unit
-    if(entityID == 4)
-    {
-        switch(ctrlSel)
-        {
-            case AUDIO_CS_CTRL_SAM_FREQ:
-                // channelNum is always zero in this case
-                switch(p_request->bRequest)
-                {
-                    case AUDIO_CS_REQ_CUR:
-                        TU_LOG2("    Get Sample Freq.\r\n");
-                        return tud_control_xfer(
-                            rhport, p_request, &sampFreq, sizeof(sampFreq));
-
-                    case AUDIO_CS_REQ_RANGE:
-                        TU_LOG2("    Get Sample Freq. range\r\n");
-                        return tud_control_xfer(rhport,
-                                                p_request,
-                                                &sampleFreqRng,
-                                                sizeof(sampleFreqRng));
-
-                        // Unknown/Unsupported control
-                    default: TU_BREAKPOINT(); return false;
-                }
-                break;
-
-            case AUDIO_CS_CTRL_CLK_VALID:
-                // Only cur attribute exists for this request
-                TU_LOG2("    Get Sample Freq. valid\r\n");
-                return tud_control_xfer(
-                    rhport, p_request, &clkValid, sizeof(clkValid));
-
-            // Unknown/Unsupported control
-            default: TU_BREAKPOINT(); return false;
-        }
-    }
-
-    TU_LOG2("  Unsupported entity: %d\r\n", entityID);
-    return false; // Yet not implemented
-}
-
-// bool tud_audio_set_itf_cb(uint8_t rhport, uint8_t itf, uint8_t alt_setting)
-// {
-//     // Called when the host sets the interface
-//     // Return true if the setting is supported, false otherwise
-// }
-
-bool tud_audio_set_itf_close_EP_cb(uint8_t                       rhport,
-                                   tusb_control_request_t const* p_request)
-{
-    (void)rhport;
-    (void)p_request;
-    startVal = 0;
-
-    return true;
-}
-
 
 void UsbHandle::AudioTask()
 {
-    tud_audio__init();
+    // tud_audio__init();
     // Check if device is ready and connected
-    if(tud_audio_mounted())
-    {
-        // Process audio data
-        // For example, if you're implementing a microphone:
-        int16_t sample = INT16_MAX;
-        tud_audio_write(&sample, sizeof(sample));
-    }
+    // if(tud_audio_mounted())
+    // {
+    // Process audio data
+    // For example, if you're implementing a microphone:
+    // int16_t sample = INT16_MAX;
+    // tud_audio_write(&sample, sizeof(sample));
+    // }
 }
 
 uint16_t count = 0;
@@ -426,13 +466,13 @@ void UsbHandle::DeInit(UsbPeriph dev)
     HAL_PWREx_DisableUSBVoltageDetector();
 }
 
-UsbHandle::Result UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
+UsbHandle::Result UsbHandle::TransmitInternal(uint8_t *buff, size_t size)
 {
     auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
     tud_cdc_write_flush();
     return ret;
 }
-UsbHandle::Result UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
+UsbHandle::Result UsbHandle::TransmitExternal(uint8_t *buff, size_t size)
 {
     auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
     tud_cdc_write_flush();

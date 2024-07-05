@@ -12,6 +12,7 @@
 #include "hid/usb_midi.h"
 #include "sys/dma.h"
 #include "sys/system.h"
+#include "hid/tusb_midi.h"
 
 namespace daisy
 {
@@ -249,6 +250,7 @@ class MidiHandler
  * */
 using MidiUartHandler = MidiHandler<MidiUartTransport>;
 using MidiUsbHandler  = MidiHandler<MidiUsbTransport>;
+using MidiTUsbHandler = MidiHandler<MidiTUsbTransport>;
 /** @} */
 } // namespace daisy
 #endif
